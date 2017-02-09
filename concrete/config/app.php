@@ -143,7 +143,10 @@ return array(
         'core_express' => '\Concrete\Core\Express\ExpressServiceProvider',
 
         // Tracker
-        'core_usagetracker' => '\Concrete\Core\Statistics\UsageTracker\ServiceProvider'
+        'core_usagetracker' => '\Concrete\Core\Statistics\UsageTracker\ServiceProvider',
+
+        // Conversations
+        'core_conversations' => \Concrete\Core\Conversation\ServiceProvider::class,
     ),
 
     /*
