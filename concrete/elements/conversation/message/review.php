@@ -11,7 +11,7 @@ if (!isset($starsOnly) || !$starsOnly) {
     <?php
 }
 ?>
-<div class="star-rating <?= $selector = uniqid('rating') ?>" data-name="review" data-score="<?= intval($review) ?>""></div>
+<div class="star-rating <?= $selector = uniqid('rating') ?>" data-name="review" data-score="<?= intval($review) ?>"></div>
 
 <script>
     (function() {
@@ -20,7 +20,7 @@ if (!isset($starsOnly) || !$starsOnly) {
         if (isset($starsOnly) && $starsOnly) {
             ?>
             $('.<?= $selector ?>').children().unbind();
-            <?
+            <?php
         }
         ?>
     }());
