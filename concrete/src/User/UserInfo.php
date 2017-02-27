@@ -28,8 +28,10 @@ use Core;
 use Concrete\Core\User\Avatar\AvatarServiceInterface;
 use Concrete\Core\Workflow\Request\ActivateUserRequest as ActivateUserWorkflowRequest;
 use Concrete\Core\Workflow\Request\DeleteUserRequest as DeleteUserWorkflowRequest;
+use Concrete\Core\Attribute\ObjectInterface as AttributeObjectInterface;
+use Concrete\Core\Permission\ObjectInterface as PermissionObjectInterface;
 
-class UserInfo extends Object implements \Concrete\Core\Permission\ObjectInterface
+class UserInfo extends Object implements AttributeObjectInterface, PermissionObjectInterface
 {
     use ObjectTrait;
 
@@ -550,7 +552,6 @@ class UserInfo extends Object implements \Concrete\Core\Permission\ObjectInterfa
         }
 
         $db = $this->connection;
-        $v = array($this->getUserID());
 
         $pkr = new ActivateUserWorkflowRequest();
         // default activate action of workflow is set after workflow request is created
@@ -561,7 +562,11 @@ class UserInfo extends Object implements \Concrete\Core\Permission\ObjectInterfa
         $pkr->setRequesterUserID($requesterUID);
         $pkr->trigger();
 
-        $this->uIsActive = intval($db->GetOne('select uIsActive from Users where uID = ?', $v));
+        // Figure out whether the user was marked active during the workflow.
+        // Usually happens if no workflows are attached (empty workflow).
+        $query = 'SELECT uIsActive FROM Users WHERE uID = ?';
+        $v = array($this->getUserID());
+        $this->entity->setUserIsActive(intval($db->GetOne($query, $v)) === 1);
 
         return $this->isActive();
     }
@@ -843,8 +848,6 @@ class UserInfo extends Object implements \Concrete\Core\Permission\ObjectInterfa
 
             return $attributeValue;
         }
-
-        return false;
     }
 
     /**

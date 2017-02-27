@@ -6,9 +6,9 @@ return [
      *
      * @var string
      */
-    'version' => '8.1.1',
-    'version_installed' => '8.1.1',
-    'version_db' => '20170131000000', // the key of the latest database migration
+    'version' => '8.2.0a2',
+    'version_installed' => '8.2.0a2',
+    'version_db' => '20170227063249', // the key of the latest database migration
 
     /*
      * Installation status
@@ -206,11 +206,25 @@ return [
             'directory' => DIR_FILES_UPLOADED_STANDARD . '/cache/pages',
             'adapter' => 'file',
         ],
-        'environment' => [
-            'file' => 'environment.cache',
-        ],
 
         'levels' => [
+            'overrides' => [
+                'drivers' => [
+                    'core_ephemeral' => [
+                        'class' => '\Stash\Driver\Ephemeral',
+                        'options' => [],
+                    ],
+
+                    'core_filesystem' => [
+                        'class' => '\Stash\Driver\FileSystem',
+                        'options' => [
+                            'path' => DIR_FILES_UPLOADED_STANDARD . '/cache',
+                            'dirPermissions' => DIRECTORY_PERMISSIONS_MODE_COMPUTED,
+                            'filePermissions' => FILE_PERMISSIONS_MODE_COMPUTED,
+                        ],
+                    ],
+                ],
+            ],
             'expensive' => [
                 'drivers' => [
                     'core_ephemeral' => [
@@ -602,11 +616,11 @@ return [
         'name' => false,
 
         /*
-         * Dashboard background image url
+         * Background image url
          *
          * @var null|string
          */
-        'dashboard_background' => null,
+        'background_image' => null,
     ],
     'session' => [
         'name' => 'CONCRETE5',
@@ -644,7 +658,7 @@ return [
             /*
              * Registration type
              *
-             * @var string The type (disabled|enabled|validate_email|manual_approve)
+             * @var string The type (disabled|enabled|validate_email)
              */
             'type' => 'disabled',
 

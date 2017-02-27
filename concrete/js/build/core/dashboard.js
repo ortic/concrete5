@@ -53,7 +53,7 @@ var ConcreteDashboard = function() {
 		}
 	}
 
-	var setupTables = function() {
+	var setupDetailsURLs = function() {
 		$('table.ccm-search-results-table tr[data-details-url]').each(function() {
 			$(this).hover(
 				function() {
@@ -63,6 +63,12 @@ var ConcreteDashboard = function() {
 					$(this).removeClass('ccm-search-select-hover');
 				}
 				)
+				.on('click', function() {
+					window.location.href = $(this).data('details-url');
+				});
+		});
+		$('div.ccm-details-panel[data-details-url]').each(function() {
+			$(this)
 				.on('click', function() {
 					window.location.href = $(this).data('details-url');
 				});
@@ -129,7 +135,7 @@ var ConcreteDashboard = function() {
 			//setupHeaderMenu();
             setupDialogs();
 			setupSelects();
-			setupTables();
+			setupDetailsURLs();
 			setupFavorites();
 		}
 

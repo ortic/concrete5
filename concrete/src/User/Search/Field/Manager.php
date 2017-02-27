@@ -9,10 +9,10 @@ use Concrete\Core\User\Search\Field\Field\DateAddedField;
 use Concrete\Core\User\Search\Field\Field\GroupSetField;
 use Concrete\Core\User\Search\Field\Field\IsActiveField;
 use Concrete\Core\User\Search\Field\Field\UserGroupField;
+use Concrete\Core\User\Search\Field\Field\IsValidatedField;
 
 class Manager extends FieldManager
 {
-
     protected $fileCategory;
 
     public function __construct(UserCategory $fileCategory)
@@ -22,6 +22,7 @@ class Manager extends FieldManager
             new KeywordsField(),
             new UserGroupField(),
             new IsActiveField(),
+            new IsValidatedField(),
             new DateAddedField(),
             new GroupSetField()
 
@@ -32,8 +33,5 @@ class Manager extends FieldManager
             $attributes[] = $field;
         }
         $this->addGroup(t('Custom Attributes'), $attributes);
-
     }
-
-
 }
